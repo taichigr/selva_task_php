@@ -68,12 +68,12 @@ $prefectures = array(
             <div class="form-group">
                 氏名
                 <div class="form-inline">
-                    <lavel for="first-name">姓</lavel>
-                    <input type="text" name="first-name" id="first-name">
+                    <lavel for="last-name">姓</lavel>
+                    <input type="text" name="first-name" id="last-name">
                 </div>
                 <div class="form-inline">
-                    <lavel for="last-name">名</lavel>
-                    <input type="text" name="last-name" id="last-name">
+                    <lavel for="fitst-name">名</lavel>
+                    <input type="text" name="first-name" id="fitst-name">
                 </div>
             </div>
             <div class="form-group">
