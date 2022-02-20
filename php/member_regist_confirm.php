@@ -18,10 +18,10 @@ $post = $_POST;
     <div class="container">
         <h2>会員情報登録フォーム</h2>
         <form method="post" action="member_regist_complete.php">
-            <input type="hidden" name="last-name" value="<?php echo $post['last-name'] ?>">
-            <input type="hidden" name="first-name" value="<?php echo $post['first-name'] ?>">
+            <input type="hidden" name="name_sei" value="<?php echo $post['name_sei'] ?>">
+            <input type="hidden" name="name_mei" value="<?php echo $post['name_mei'] ?>">
             <input type="hidden" name="gender" value="<?php echo $post['gender'] ?>">
-            <input type="hidden" name="prefecture" value="<?php echo $post['prefecture'] ?>">
+            <input type="hidden" name="pref_name" value="<?php echo $post['pref_name'] ?>">
             <input type="hidden" name="address" value="<?php echo $post['address'] ?>">
             <input type="hidden" name="password" value="<?php echo $post['password'] ?>">
             <input type="hidden" name="email" value="<?php echo $post['email'] ?>">
@@ -29,7 +29,7 @@ $post = $_POST;
             <div class="form-group">
                 氏名
                 <div class="confirm-area inline">
-                    <?php echo $post['last-name'].'　'.$post['first-name'] ?>
+                    <?php echo $post['name_sei'].'　'.$post['name_mei'] ?>
                 </div>
 
             </div>
@@ -48,7 +48,7 @@ $post = $_POST;
                 <div class="form-inline">住所</div>
                 <div class="confirm-area inline">
                     <?php
-                        echo $post['prefecture'].$post['address'];
+                        echo $post['pref_name'].$post['address'];
                     ?>
                 </div>
             </div>

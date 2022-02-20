@@ -68,12 +68,12 @@ $prefectures = array(
             <div class="form-group">
                 氏名
                 <div class="form-inline">
-                    <lavel for="last-name">姓</lavel>
-                    <input type="text" name="last-name" id="last-name">
+                    <lavel for="name_sei">姓</lavel>
+                    <input type="text" name="name_sei">
                 </div>
                 <div class="form-inline">
-                    <lavel for="fitst-name">名</lavel>
-                    <input type="text" name="first-name" id="fitst-name">
+                    <lavel for="name_mei">名</lavel>
+                    <input type="text" name="name_mei">
                 </div>
             </div>
             <div class="form-group">
@@ -90,7 +90,7 @@ $prefectures = array(
             <div class="form-group">
                 <div class="form-inline">住所</div>
                 <lavel>都道府県</lavel>
-                <select name="prefecture" id="">
+                <select name="pref_name" id="">
                     <option value="0">選択してください</option>
                     <?php foreach($prefectures as $prefecture): ?>
                         <option value="<?php echo $prefecture ?>"><?php echo $prefecture ?></option>
