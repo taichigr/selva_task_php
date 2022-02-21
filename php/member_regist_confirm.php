@@ -1,5 +1,4 @@
 <?php
-print_r($_POST);
 $post = $_POST;
 ?>
 
@@ -22,8 +21,8 @@ $post = $_POST;
             <input type="hidden" name="name_mei" value="<?php echo $post['name_mei'] ?>">
             <input type="hidden" name="gender" value="<?php echo $post['gender'] ?>">
             <input type="hidden" name="pref_name" value="<?php echo $post['pref_name'] ?>">
-            <input type="hidden" name="address" value="<?php echo $post['address'] ?>">
-            <input type="hidden" name="password" value="<?php echo $post['password'] ?>">
+            <input type="hidden" name="address" value="">
+            <input type="hidden" name="password" value="">
             <input type="hidden" name="email" value="<?php echo $post['email'] ?>">
 
             <div class="form-group">
