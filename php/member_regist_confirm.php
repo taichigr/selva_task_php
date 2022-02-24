@@ -28,7 +28,7 @@ if(!empty($_POST)) {
         $_SESSION['login_date'] = time();
         $_SESSION['login_limit'] = $sesLimit;
         // ユーザー情報
-        $_SESSION['user_id'] = $dbh->lastInsertId();
+        $_SESSION['member_id'] = $dbh->lastInsertId();
         $_SESSION['name_sei'] = $session['name_sei'];
         $_SESSION['name_mei'] = $session['name_mei'];
 

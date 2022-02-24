@@ -1,21 +1,31 @@
 <?php
-//======================
-// スレッド登録確認
-//======================
-
 require('function.php');
-$thread_id = (!empty($_GET['id'])) ? $_GET['id']: '';
-
-if(!empty($thread_id)) {
+require('auth.php');
+print_r($_SESSION);
+if(!empty($_POST)) {
     try {
-        $stmt = getThreadDetail($thread_id);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $dbh = dbConnect();
+        $sql = 'INSERT INTO
+            threads (member_id, title, content, created_at, updated_at)
+            VALUES (:member_id, :title, :content, :created_at, :updated_at)
+            ';
+        $data = array(
+            ':member_id' => $_SESSION['member_id'],
+            ':title' => $_POST['title'],
+            ':content' => $_POST['content'],
+            ':created_at' => date('Y-m-d H:i:s'),
+            ':updated_at' => date('Y-m-d H:i:s'),
+        );
+        $stmt = queryPost($dbh, $sql, $data);
+        $_SESSION['title'] = "";
+        $_SESSION['content'] = "";
+        header("Location:index.php");
     } catch (Exception $e) {
-        $err_msg = MSG09;
+        $err_msg['common'] = MSG09;
     }
+
+
 }
-
-
 
 ?>
 <!doctype html>
@@ -25,57 +35,51 @@ if(!empty($thread_id)) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>スレッド詳細</title>
+    <title>会員登録完了</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<header class="header">
-    <div class="header-left">
-        <?php if(!empty($_SESSION['login_date'])): ?>
-            <div class="header-msg">
-                ようこそ
-                <?php if(!empty($_SESSION['name_sei']) && $_SESSION['name_mei']) echo $_SESSION['name_sei'].$_SESSION['name_mei'] ?>
-                様
-            </div>
-        <?php endif ?>
-    </div>
-    <div class="header-right">
-        <ul>
-            <li><a class="btn btn-header" href="thread.php">スレッド一覧に戻る</a></li>
-        </ul>
-    </div>
-</header>
+<?php require('header.php'); ?>
 
 <main>
     <div class="container">
-        <h2><?php if(!empty($result)) echo $result['title'] ?></h2>
-        <p class="thread-detail-time"><?php if(!empty($result)) echo date("m/d/y h:i", strtotime($result['created_at'])) ?></p>
-        <div class="gray-area"></div>
-        <div class="thread-content-area">
-            <p>投稿者：<?php if(!empty($result)) echo $result['name_sei'].$result['name_mei'] ?>　<?php if(!empty($result)) echo date('Y.m.d H:i', strtotime($result['created_at'])) ?></p>
-            <p><?php if(!empty($result)) echo $result['content'] ?></p>
-        </div>
-        <div class="gray-area"></div>
+        <h2>スレッド作成確認画面</h2>
+        <form method="post" action="thread_regist_confirm.php">
+            <input type="hidden" name="title" value="<?php echo $_SESSION['title'] ?>">
+            <input type="hidden" name="content" value="<?php echo $_SESSION['content'] ?>">
 
-        <?php
-        if(!empty($_SESSION['login_date'])):
-            if(($_SESSION['login_date'] + $_SESSION['login_limit']) > time()):
-                ?>
-                <form method="post" action="">
-                    <div class="form-group">
-                        <textarea style="width: 100%; height: 100px" name="comment" ></textarea>
-                    </div>
-                    <div class="form-group btn-right">
-                        <input class="btn btn-default" type="submit" value="コメントする">
-                    </div>
-                </form>
-            <?php
-            endif;
-        endif;
-        ?>
+            <div class="form-group">
+                タイトル
+                <div class="confirm-area inline">
+                    <?php echo $_SESSION['title'] ?>
+                </div>
+            </div>
+            <div class="form-group">
+                コメント
+                <div class="confirm-area inline">
+                    <?php echo $_SESSION['content'] ?>
+                </div>
+            </div>
 
+            <div class="form-group btn-wrapper">
+                <input class="btn btn-default" type="submit" value="登録完了">
+            </div>
+            <div class="form-group btn-wrapper">
+                <button class="btn btn-back" type="button" onclick="history.back()">前に戻る</button>
+            </div>
+            <div class="form-group btn-wrapper">
+                <a class="btn btn-back" href="index.php" >トップに戻る</a>
+            </div>
+        </form>
     </div>
 
 </main>
+<script>
+    $(function() {
+        $('form').submit(function () {
+            $(this).find(':submit').prop('disabled', 'true');
+        });
+    })
+</script>
 </body>
 </html>
