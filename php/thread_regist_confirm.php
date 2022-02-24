@@ -1,7 +1,6 @@
 <?php
 require('function.php');
 require('auth.php');
-print_r($_SESSION);
 if(!empty($_POST)) {
     try {
         $dbh = dbConnect();
