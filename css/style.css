@@ -1,21 +1,152 @@
-h1,h2,h3,h4,p {
-    padding: 0;
-    margin: 0;
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
 }
-input, textarea, select, button {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+a {
+    text-decoration: none;
+    color : inherit;
+}
+ul {
+    list-style: none;
+}
+/*---------ヘッダーのスタイル---------*/
+.header {
+    background-color: #ffe4d2;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+}
+.header-left {
+}
+.header-right ul {
+    display: flex;
+    width: 100%;
+    line-height: 60px;
+}
+.header-right li {
+    margin-right: 10px;
+}
+
+/*---------コンテナ---------*/
+main {
+    margin-top: 30px;
 }
 .container {
     margin: 0 auto;
-    width: 580px;
-
+    width: 700px;
     border: 1px solid #000;
     background: #dceaf8;
-    padding: 40px 80px;
+    padding: 40px 60px;
     box-sizing: border-box;
+    overflow: hidden;
 }
+/*.container-thread-detail {*/
+/*    margin: 0 auto;*/
+/*    width: 640px;*/
+
+/*    border: 1px solid #000;*/
+/*    background: #dceaf8;*/
+/*    padding: 40px 60px;*/
+/*    box-sizing: border-box;*/
+/*}*/
 
 .container h2 {
     text-align: center;
@@ -29,6 +160,9 @@ input, textarea, select, button {
 .btn-wrapper {
     margin-top: 35px;
     text-align: center;
+}
+.btn-right {
+    text-align: right;
 }
 .btn {
     padding: 7px 35px;
@@ -49,6 +183,10 @@ input, textarea, select, button {
     background-color: #fff;
     border: 1px solid #406bca;
 }
+.btn-header {
+    border: 1px solid #000000;
+    border-radius: 0;
+}
 .inline {
     display: inline;
 }
@@ -58,4 +196,36 @@ input, textarea, select, button {
 .register-complete-text {
     text-align: center;
     margin-top: 20px;
+}
+.err-msg {
+    color: #ff0000;
+}
+input:disabled {
+    opacity: 0.7;
+}
+.bg-color_white {
+    background-color: #fff;
+}
+table tr td {
+    padding: 10px;
+}
+table tr td a {
+    color: #406bca;
+}
+.gray-area {
+    margin-left: calc(((100vw - 100%) / 2) * -1);
+    margin-right: calc(((100vw - 100%) / 2) * -1);
+    height: 30px;
+    background-color: #cccccc;
+    margin-top: 10px;
+}
+.thread-content-area {
+    border-radius: 30px;
+    border: 1px solid #406bca;
+    color: #406bca;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+.thread-detail-time {
+    text-align: right;
 }

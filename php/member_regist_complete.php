@@ -1,6 +1,8 @@
 <?php
-$post = $_POST;
-
+//======================
+// メンバー登録完了
+//======================
+require('function.php');
 ?>
 <!doctype html>
 <html lang="ja">
@@ -17,7 +19,11 @@ $post = $_POST;
     <div class="container register-complete-container">
         <h2>会員登録完了</h2>
         <p class="register-complete-text">会員登録が完了しました。</p>
+        <div class="form-group btn-wrapper">
+            <a class="btn btn-back" href="index.php" >トップに戻る</a>
+        </div>
     </div>
+
 </main>
 </body>
 </html>
