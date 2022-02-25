@@ -18,12 +18,10 @@ if(!empty($_POST)) {
         $stmt = queryPost($dbh, $sql, $data);
         $_SESSION['title'] = "";
         $_SESSION['content'] = "";
-        header("Location:index.php");
+        header("Location:thread.php");
     } catch (Exception $e) {
         $err_msg['common'] = MSG09;
     }
-
-
 }
 
 ?>
@@ -47,16 +45,16 @@ if(!empty($_POST)) {
             <input type="hidden" name="title" value="<?php echo $_SESSION['title'] ?>">
             <input type="hidden" name="content" value="<?php echo $_SESSION['content'] ?>">
 
-            <div class="form-group">
-                タイトル
-                <div class="confirm-area inline">
-                    <?php echo $_SESSION['title'] ?>
+            <div class="thread-confirm-group">
+                <div class="thread-confirm-title">タイトル</div>
+                <div class="thread-confirm-text">
+                    <?php echo nl2br($_SESSION['title']) ?>
                 </div>
             </div>
-            <div class="form-group">
-                コメント
-                <div class="confirm-area inline">
-                    <?php echo $_SESSION['content'] ?>
+            <div class="thread-confirm-group">
+                <div class="thread-confirm-title">コメント</div>
+                <div class="thread-confirm-text">
+                    <?php echo nl2br($_SESSION['content']) ?>
                 </div>
             </div>
 

@@ -3,4 +3,4 @@
 require('function.php');
 session_destroy();
 // ログインページへ
-header("Location:login.php");
+header("Location:index.php");

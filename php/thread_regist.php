@@ -52,7 +52,7 @@ if(!empty($_POST)){
             </div>
             <div class="err-msg">
                 <?php
-                if(!empty($err_msg['title'])) echo '＊コメント：'.$err_msg['content'];
+                if(!empty($err_msg['content'])) echo '＊コメント：'.$err_msg['content'];
                 ?>
             </div>
 

@@ -19,7 +19,7 @@ if(!empty($_POST)){
     validRequired($gender, 'gender');
     validRequired($prefName, 'pref_name');
     validNameLength($nameSei, 'name_sei');
-    validNameLength($nameMei, 'first_mei');
+    validNameLength($nameMei, 'name_mei');
     validPrefNameRequired($prefName, 'pref_name');
     validAddressLength($address, 'address');
     validPassword($password, 'password');
