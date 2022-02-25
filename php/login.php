@@ -27,6 +27,9 @@ if(!empty($_POST)) {
                 $_SESSION['name_sei'] = $result['name_sei'];
                 $_SESSION['name_mei'] = $result['name_mei'];
                 header("Location:index.php");
+            } else {
+                $err_msg = array('');
+                $err_msg['login'] = MSG12;
             }
         } catch (Exception $e) {
             $err_msg['common'] = MSG09;
@@ -34,7 +37,6 @@ if(!empty($_POST)) {
     } else {
         $err_msg = array('');
         $err_msg['login'] = MSG12;
-
     }
 }
 
@@ -68,6 +70,12 @@ if(!empty($_POST)) {
             <div class="err-msg">
                 <?php
                 if(!empty($err_msg['login'])) echo '＊'.$err_msg['login'];
+                ?>
+                <?php
+                if(!empty($err_msg['password'])) echo '＊'.$err_msg['password'];
+                ?>
+                <?php
+                if(!empty($err_msg['email'])) echo '＊'.$err_msg['email'];
                 ?>
             </div>
 
