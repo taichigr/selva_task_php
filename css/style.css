@@ -219,6 +219,19 @@ table tr td a {
     background-color: #cccccc;
     margin-top: 10px;
 }
+
+.gray-area-inner {
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 30px;
+    width: 700px;
+    display: flex;
+    justify-content: space-between;
+}
+.gray-area-inner a {
+    padding-right: 5px;
+    padding-left: 5px;
+}
 .thread-content-area {
     border-radius: 30px;
     border: 1px solid #406bca;
