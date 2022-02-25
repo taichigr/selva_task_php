@@ -253,3 +253,6 @@ table tr td a {
     width: 400px;
     word-break: break-all;
 }
+.thread-detail-content {
+    word-break: break-all;
+}

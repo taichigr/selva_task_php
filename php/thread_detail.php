@@ -52,8 +52,8 @@ if(!empty($thread_id)) {
                 <a href="">次へ</a>
             </div>
         </div>        <div class="thread-content-area">
-            <p>投稿者：<?php if(!empty($result)) echo $result['name_sei'].$result['name_mei'] ?>　<?php if(!empty($result)) echo date('Y.m.d H:i', strtotime($result['created_at'])) ?></p>
-            <p><?php if(!empty($result)) echo nl2br($result['content']) ?></p>
+            <p class="thread-detail-namearea">投稿者：<?php if(!empty($result)) echo $result['name_sei'].$result['name_mei'] ?>　<?php if(!empty($result)) echo date('Y.m.d H:i', strtotime($result['created_at'])) ?></p>
+            <p class="thread-detail-content"><?php if(!empty($result)) echo nl2br($result['content']) ?></p>
         </div>
         <div class="gray-area">
             <div class="gray-area-inner">
