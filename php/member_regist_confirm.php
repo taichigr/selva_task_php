@@ -73,7 +73,7 @@ if(!empty($_POST)) {
             <div class="form-group">
                 性別
                 <div class="confirm-area inline">
-                    <?php if($session['gender'] == 0){
+                    <?php if($session['gender'] == 1){
                         echo '男性';
                     } else {
                         echo '女性';

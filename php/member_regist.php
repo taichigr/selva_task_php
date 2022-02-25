@@ -135,10 +135,10 @@ $prefectures = array(
             <div class="form-group">
                 性別
                 <div class="form-inline">
-                    <label><input type="radio" name="gender" value="0" required <?php if(!empty($gender) && $gender === "0") echo "checked" ?>>男性</label>
+                    <label><input type="radio" name="gender" value="1" required <?php if(!empty($gender) && $gender === "1") echo "checked" ?>>男性</label>
                 </div>
                 <div class="form-inline">
-                    <label><input type="radio" name="gender" value="1" <?php if(!empty($gender) && $gender === "1") echo "checked" ?>>女性</label>
+                    <label><input type="radio" name="gender" value="2" <?php if(!empty($gender) && $gender === "2") echo "checked" ?>>女性</label>
                 </div>
                 <div class="err-msg">
                     <?php
