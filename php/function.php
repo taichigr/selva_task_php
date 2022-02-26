@@ -22,6 +22,7 @@ define('MSG12', 'IDもしくはパスワードが違います');
 define('MSG13', '字以内で入力してください');
 define('MSG14', 'コメントは入力必須です');
 define('MSG15', 'ログインできません');
+define('MSG16', '7~10字で入力してください');
 
 
 
@@ -72,6 +73,12 @@ function validPasswordLength($str, $key) {
     if(mb_strlen($str) < 8 || mb_strlen($str) > 20){
         global $err_msg;
         $err_msg[$key] = MSG05;
+    }
+}
+function validLoginIdLength($str, $key) {
+    if(mb_strlen($str) < 7 || mb_strlen($str) > 10){
+        global $err_msg;
+        $err_msg[$key] = MSG16;
     }
 }
 function validMatch($str1, $str2, $key) {
