@@ -267,3 +267,17 @@ table tr td a {
     pointer-events:none;
     color: #7d7d7d;
 }
+.icon-area {
+    margin-top: 5px;
+    text-align: right;
+    padding-right: 150px;
+}
+.icon-area i {
+    margin-right: 5px;
+}
+.btn-submit {
+    cursor: pointer;
+}
+.red {
+    color: red;
+}

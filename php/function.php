@@ -195,3 +195,35 @@ function pagination($totalPageNum, $thread_id, $page = 1){
         echo '<a href="" class="disabled">次へ ></a>';
     }
 }
+// コメントのいいねの数を数える関数
+function getLikeCount($comment_id) {
+    try {
+        $dbh = dbConnect();
+        $sql = 'SELECT count(*) FROM likes WHERE comment_id = :comment_id';
+        $data = array(
+            ':comment_id' => $comment_id
+        );
+        $stmt = queryPost($dbh, $sql, $data);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return array_shift($result);
+    } catch(Exception $e) {
+
+    }
+}
+function watchUserLike($member_id, $comment_id) {
+    try {
+        $dbh = dbConnect();
+        $sql = 'SELECT count(*) FROM likes WHERE member_id = :member_id AND comment_id = :comment_id';
+        $data = array(
+            ':member_id' => $member_id,
+            ':comment_id' => $comment_id
+        );
+        $stmt = queryPost($dbh, $sql, $data);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(!empty(array_shift($result))) {
+            echo "fa-solid red";
+        }
+    }catch (Exception $e) {
+
+    }
+}

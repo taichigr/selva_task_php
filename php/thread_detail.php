@@ -89,8 +89,6 @@ if(!empty($_POST)) {
     }
 }
 
-print_r($_SESSION);
-
 ?>
 <!doctype html>
 <html lang="ja">
@@ -100,9 +98,11 @@ print_r($_SESSION);
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>スレッド詳細</title>
+    <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
 <header class="header">
     <div class="header-left">
         <?php if(!empty($_SESSION['login_date'])): ?>
@@ -138,6 +138,16 @@ print_r($_SESSION);
                 <div class="comment-area">
                     <p class="comment-area-username">1. <?php echo $comment['name_sei'].'　'.$comment['name_mei'] ?>　<?php echo date("Y.m.d h:i", strtotime($comment['created_at'])) ?></p>
                     <p class="comment-area-comment"><?php echo nl2br($comment['comment']) ?></p>
+                    <div class="icon-area">
+                        <form action="thread_like.php" method="post">
+                            <input type="hidden" name="member_id" value="<?php echo $_SESSION['member_id']; ?>">
+                            <input type="hidden" name="comment_id" value="<?php echo $comment['id']; ?>">
+                            <input type="hidden" name="thread_id" value="<?php echo $thread_id; ?>">
+                            <input type="hidden" name="pageNum" value="<?php echo $currentPage; ?>">
+                            <button class="btn-submit" style="background: none; border: none;" type="submit"><i class="fa-regular fa-heart <?php watchUserLike($_SESSION['member_id'], $comment['id']); ?>"></i></button><?php echo getLikeCount($comment['id']); ?>
+                        </form>
+
+                    </div>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
