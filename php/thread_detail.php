@@ -48,14 +48,14 @@ if(!empty($thread_id)) {
         );
         $stmt4 = queryPost($dbh4, $sql4, $data4);
         $comments = $stmt4->fetchAll();
-
+        if(!empty($_SESSION['error_msg'])){
+            $thread_error_msg = $_SESSION['error_msg'];
+            $_SESSION['error_msg'] = array('');
+        }
     } catch (Exception $e) {
         $err_msg['common'] = MSG09;
         $err_msg['error_msg'] = $err_msg;
     }
-} else {
-    // スレッドIDがない＝表示できないからトップへ
-//     header("Location:index.php");
 }
 
 if(!empty($_POST)) {
@@ -89,7 +89,7 @@ if(!empty($_POST)) {
     }
 }
 
-
+print_r($_SESSION);
 
 ?>
 <!doctype html>
@@ -157,13 +157,13 @@ if(!empty($_POST)) {
                     </div>
                     <div class="err-msg">
                         <?php
-                        if(!empty($_SESSION['error_msg']['comment'])) {
-                            echo '＊' . $_SESSION['error_msg']['comment'];
+                        if(!empty($thread_error_msg['comment'])) {
+                            echo '＊' . $thread_error_msg['comment'];
                         }
                         ?>
                         <?php
-                        if(!empty($_SESSION['error_msg']['common'])) {
-                            echo '＊' . $_SESSION['error_msg']['common'];
+                        if(!empty($thread_error_msg['comment']['common'])) {
+                            echo '＊' . $thread_error_msg['common'];
                         }
                         ?>
                     </div>
