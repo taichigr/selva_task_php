@@ -137,7 +137,7 @@ print_r($_SESSION);
             <?php foreach($comments as $comment): ?>
                 <div class="comment-area">
                     <p class="comment-area-username">1. <?php echo $comment['name_sei'].'　'.$comment['name_mei'] ?>　<?php echo date("Y.m.d h:i", strtotime($comment['created_at'])) ?></p>
-                    <p class="comment-area-comment"><?php echo $comment['comment'] ?></p>
+                    <p class="comment-area-comment"><?php echo nl2br($comment['comment']) ?></p>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
