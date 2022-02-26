@@ -184,12 +184,14 @@ function pagination($totalPageNum, $thread_id, $page = 1){
         // 最初のページ以外で「前へ」を表示
         echo '<a class="active" href="thread_detail.php?id='.$thread_id.'&page=' . $prev . '">前へ ></a>';
     } else {
+        // 最初のページでリンクを押せなくする
         echo '<a href="" class="disabled">前へ ></a>';
     }
     if ($page < $totalPageNum) {
-        // 最後のページ以外で「次へ」を表示
+        // 最後のページ以外
         echo '<a class="active" href="thread_detail.php?id='.$thread_id.'&page=' . $next . '">次へ ></a>';
     } else {
+        // 最後のページでリンクを押せなくする
         echo '<a href="" class="disabled">次へ ></a>';
     }
 }
