@@ -16,21 +16,26 @@ if(!empty($_POST)) {
         // DB接続
         try {
             $dbh = dbConnect();
-            $sql = 'SELECT password, id, name_sei, name_mei FROM members WHERE email = :email';
+            $sql = 'SELECT password, id, name_sei, name_mei, deleted_at FROM members WHERE email = :email';
             $data = array(':email' => $email);
             $stmt = queryPost($dbh, $sql, $data);
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            if(!empty($result) && password_verify($password, array_shift($result))) {
-                $_SESSION['login_date'] = time();
-                $_SESSION['login_limit'] = 60 * 60;
-                $_SESSION['member_id'] = $result['id'];
-                $_SESSION['name_sei'] = $result['name_sei'];
-                $_SESSION['name_mei'] = $result['name_mei'];
-                header("Location:index.php");
+            if(!empty($result['deleted_at'])) {
+                $err_msg['common'] = MSG15;
             } else {
-                $err_msg = array('');
-                $err_msg['login'] = MSG12;
+                if(!empty($result) && password_verify($password, array_shift($result))) {
+                    $_SESSION['login_date'] = time();
+                    $_SESSION['login_limit'] = 60 * 60;
+                    $_SESSION['member_id'] = $result['id'];
+                    $_SESSION['name_sei'] = $result['name_sei'];
+                    $_SESSION['name_mei'] = $result['name_mei'];
+                    header("Location:index.php");
+                } else {
+                    $err_msg = array('');
+                    $err_msg['login'] = MSG12;
+                }
             }
+
         } catch (Exception $e) {
             $err_msg['common'] = MSG09;
         }
@@ -76,6 +81,9 @@ if(!empty($_POST)) {
                 ?>
                 <?php
                 if(!empty($err_msg['email'])) echo '＊'.$err_msg['email'];
+                ?>
+                <?php
+                if(!empty($err_msg['common'])) echo '＊'.$err_msg['common'];
                 ?>
             </div>
 

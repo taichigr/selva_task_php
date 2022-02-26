@@ -20,5 +20,6 @@ require('function.php');
         <h2>トップページ</h2>
     </div>
 </main>
+<?php require('footer.php'); ?>
 </body>
 </html>
