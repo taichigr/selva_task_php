@@ -217,7 +217,6 @@ table tr td a {
     margin-right: calc(((100vw - 100%) / 2) * -1);
     height: 30px;
     background-color: #cccccc;
-    margin-top: 10px;
 }
 
 .gray-area-inner {
@@ -255,4 +254,16 @@ table tr td a {
 }
 .thread-detail-content {
     word-break: break-all;
+}
+.comment-area {
+    padding-bottom: 20px;
+    margin-top: 10px;
+    border-bottom: 1px #cccccc solid;
+}
+.gray-area-inner .active {
+    color: #406bca;
+}
+.gray-area-inner .disabled {
+    pointer-events:none;
+    color: #7d7d7d;
 }

@@ -75,9 +75,9 @@ if(!empty($_POST)) {
                     <table>
                         <?php foreach ($results as $result): ?>
                             <tr>
-                                <td><a href="thread_detail.php?id=<?php echo $result['id'] ?>">id:<?php echo $result['id'] ?></a></td>
-                                <td style=><a href="thread_detail.php?id=<?php echo $result['id'] ?>"><?php echo $result['title'] ?></a></td>
-                                <td><a href="thread_detail.php?id=<?php echo $result['id'] ?>"><?php echo date('Y.m.d H:i', strtotime($result['created_at'])) ?></a></td>
+                                <td><a href="thread_detail.php?id=<?php echo $result['id'] ?>&page=1">id:<?php echo $result['id'] ?></a></td>
+                                <td style=><a href="thread_detail.php?id=<?php echo $result['id'] ?>&page=1"><?php echo $result['title'] ?></a></td>
+                                <td><a href="thread_detail.php?id=<?php echo $result['id'] ?>&page=1"><?php echo date('Y.m.d H:i', strtotime($result['created_at'])) ?></a></td>
                             </tr>
                         <?php endforeach; ?>
                     </table>

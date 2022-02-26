@@ -1,13 +1,87 @@
 <?php
 require('function.php');
 $thread_id = (!empty($_GET['id'])) ? $_GET['id']: '';
+//$page = (!empty($_GET['page'])) ? $_GET['page']: '';
+
+//print_r($_SESSION);
 
 if(!empty($thread_id)) {
     try {
-        $stmt = getThreadDetail($thread_id);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt1 = getThreadDetail($thread_id);
+        $result = $stmt1->fetch(PDO::FETCH_ASSOC);
+
     } catch (Exception $e) {
-        $err_msg = MSG09;
+        $err_msg['common'] = MSG09;
+    }
+    try {
+        $dbh2 = dbConnect();
+        $sql2 = 'SELECT count(*)
+                    FROM comments 
+                    WHERE thread_id = :id
+            ';
+        $data2 = array(
+            ':id' => $thread_id
+        );
+        $stmt2 = queryPost($dbh2, $sql2, $data2);
+        $result2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+        $commentCount = array_shift($result2);
+        // ページネーション作成準備
+        $count = $commentCount;
+        $perPage = 5;
+        $totalPageNum = ceil($count/$perPage);
+        $currentPage = $_GET['page'];
+
+    } catch (Exception $e) {
+        $err_msg['common'] = MSG09;
+    }
+    try {
+        $dbh4 = dbConnect();
+        $sql4 = 'SELECT c.id, c.member_id, c.thread_id, c.comment, c.created_at, m.name_sei, m.name_mei
+                    FROM comments AS c
+                    LEFT JOIN members AS m
+                    ON c.member_id = m.id
+                    WHERE thread_id = :id
+                    ORDER BY c.created_at DESC
+                    LIMIT 5 OFFSET '.($_GET['page']-1)*5;
+
+        $data4 = array(
+            ':id' => $thread_id,
+        );
+        $stmt4 = queryPost($dbh4, $sql4, $data4);
+        $comments = $stmt4->fetchAll();
+
+    } catch (Exception $e) {
+        $err_msg['common'] = MSG09;
+    }
+} else {
+    // スレッドIDがない＝表示できないからトップへ
+//     header("Location:index.php");
+}
+
+if(!empty($_POST)) {
+    $member_id = $_SESSION['member_id'];
+    $thread_id = $_POST['thread_id'];
+    $comment = $_POST['comment'];
+    validCommentRequired($comment, 'comment');
+    validMaxLen($comment, 'comment', 500);
+    if(empty($err_msg)) {
+        try {
+            $dbh3 = dbConnect();
+            $sql3 = 'INSERT INTO comments (member_id, thread_id, comment, created_at, updated_at) 
+                    VALUES (:member_id, :thread_id, :comment, :created_at, :updated_at)
+            ';
+            $data3 = array(
+                    ':member_id' => $member_id,
+                    'thread_id' => $thread_id,
+                    'comment' => $comment,
+                    ':created_at' => date('Y-m-d H:i:s'),
+                    ':updated_at' => date('Y-m-d H:i:s'),
+            );
+            $stmt3 = queryPost($dbh3, $sql3, $data3);
+            header("Location:thread_detail.php?id=".$thread_id);
+        } catch (Exception $e) {
+            $err_msg['common'] = MSG09;
+        }
     }
 }
 
@@ -45,29 +119,40 @@ if(!empty($thread_id)) {
 <main>
     <div class="container">
         <h2><?php if(!empty($result)) echo $result['title'] ?></h2>
-        <p class="thread-detail-time"><?php if(!empty($result)) echo date("m/d/y h:i", strtotime($result['created_at'])) ?></p>
-        <div class="gray-area">
+        <p class="thread-detail-time"><?php echo $commentCount ?>コメント　　<?php if(!empty($result)) echo date("m/d/y h:i", strtotime($result['created_at'])) ?></p>
+        <div class="gray-area" style="margin-top: 10px;">
             <div class="gray-area-inner">
-                <a href="">前へ</a>
-                <a href="">次へ</a>
+                <?php pagination($totalPageNum, $thread_id, $currentPage); ?>
             </div>
-        </div>        <div class="thread-content-area">
+        </div>
+        <div class="thread-content-area">
             <p class="thread-detail-namearea">投稿者：<?php if(!empty($result)) echo $result['name_sei'].$result['name_mei'] ?>　<?php if(!empty($result)) echo date('Y.m.d H:i', strtotime($result['created_at'])) ?></p>
             <p class="thread-detail-content"><?php if(!empty($result)) echo nl2br($result['content']) ?></p>
         </div>
+        <?php if(!empty($comments)): ?>
+            <?php foreach($comments as $comment): ?>
+                <div class="comment-area">
+                    <p class="comment-area-username">1. <?php echo $comment['name_sei'].'　'.$comment['name_mei'] ?>　<?php echo date("Y.m.d h:i", strtotime($comment['created_at'])) ?></p>
+                    <p class="comment-area-comment"><?php echo $comment['comment'] ?></p>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <div class="gray-area">
             <div class="gray-area-inner">
-                <a href="">前へ</a>
-                <a href="">次へ</a>
+                <?php pagination($totalPageNum, $thread_id, $currentPage); ?>
             </div>
         </div>
         <?php
         if(!empty($_SESSION['login_date'])):
             if(($_SESSION['login_date'] + $_SESSION['login_limit']) > time()):
                 ?>
-                <form method="post" action="">
+                <form method="post" action="thread_detail.php">
                     <div class="form-group">
-                        <textarea style="width: 100%; height: 100px" name="comment" ></textarea>
+                        <textarea style="width: 100%; height: 100px" name="comment"></textarea>
+                        <input type="hidden" name="thread_id" value="<?php echo $thread_id; ?>">
+                    </div>
+                    <div class="err-msg">
+                        <?php if(!empty($err_msg['comment'])) echo '＊'.$err_msg['comment']  ?>
                     </div>
                     <div class="form-group btn-right">
                         <input class="btn btn-default" type="submit" value="コメントする">

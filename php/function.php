@@ -20,6 +20,8 @@ define('MSG10', '都道府県を選択してください');
 define('MSG11', 'メールアドレスが重複しています');
 define('MSG12', 'IDもしくはパスワードが違います');
 define('MSG13', '字以内で入力してください');
+define('MSG14', 'コメントは入力必須です');
+
 
 
 
@@ -32,6 +34,12 @@ function validRequired($str, $key) {
     if($str === '') {
         global $err_msg;
         $err_msg[$key] = MSG01;
+    }
+}
+function validCommentRequired($str, $key) {
+    if($str === '') {
+        global $err_msg;
+        $err_msg[$key] = MSG14;
     }
 }
 function validNameLength($str, $key) {
@@ -163,4 +171,25 @@ function getThreadDetail($thread_id) {
         ':id' => $thread_id
     );
     return $stmt = queryPost($dbh, $sql, $data);
+}
+//===============================
+// スレッド詳細のページネーション
+//===============================
+// ページネーションの関数
+function pagination($totalPageNum, $thread_id, $page = 1){
+    $prev = max($page - 1, 1); // 前のページ番号
+    $next = min($page + 1, $totalPageNum); // 次のページ番号
+
+    if ($page != 1) {
+        // 最初のページ以外で「前へ」を表示
+        echo '<a class="active" href="thread_detail.php?id='.$thread_id.'&page=' . $prev . '">前へ ></a>';
+    } else {
+        echo '<a href="" class="disabled">前へ ></a>';
+    }
+    if ($page < $totalPageNum) {
+        // 最後のページ以外で「次へ」を表示
+        echo '<a class="active" href="thread_detail.php?id='.$thread_id.'&page=' . $next . '">次へ ></a>';
+    } else {
+        echo '<a href="" class="disabled">次へ ></a>';
+    }
 }
