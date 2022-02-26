@@ -85,7 +85,6 @@ if(!empty($_POST)) {
         }
     } else {
         $_SESSION['error_msg'] = $err_msg;
-        $_SESSION['comment'] = $comment;
         header("Location:thread_detail.php?id=".$thread_id."&page=1");
     }
 }
@@ -153,7 +152,7 @@ if(!empty($_POST)) {
                 ?>
                 <form method="post" action="thread_detail.php">
                     <div class="form-group">
-                        <textarea style="width: 100%; height: 100px" name="comment"><?php if(!empty($_SESSION['comment'])) echo $_SESSION['comment'] ?></textarea>
+                        <textarea style="width: 100%; height: 100px" name="comment"></textarea>
                         <input type="hidden" name="thread_id" value="<?php echo $thread_id; ?>">
                     </div>
                     <div class="err-msg">
