@@ -1,5 +1,10 @@
 <?php
 require('function.php');
+if(!empty($_SESSION['login_date'])) {
+    if(($_SESSION['login_date'] + $_SESSION['login_limit']) < time()) {
+        session_destroy();
+    }
+}
 
 if(!empty($_POST)) {
     // 検索されたとき

@@ -1,9 +1,6 @@
 <?php
 require('function.php');
 $thread_id = (!empty($_GET['id'])) ? $_GET['id']: '';
-//$page = (!empty($_GET['page'])) ? $_GET['page']: '';
-
-//print_r($_SESSION);
 
 if(!empty($thread_id)) {
     try {
@@ -12,6 +9,7 @@ if(!empty($thread_id)) {
 
     } catch (Exception $e) {
         $err_msg['common'] = MSG09;
+        $err_msg['error_msg'] = $err_msg;
     }
     try {
         $dbh2 = dbConnect();
@@ -33,6 +31,7 @@ if(!empty($thread_id)) {
 
     } catch (Exception $e) {
         $err_msg['common'] = MSG09;
+        $err_msg['error_msg'] = $err_msg;
     }
     try {
         $dbh4 = dbConnect();
@@ -52,6 +51,7 @@ if(!empty($thread_id)) {
 
     } catch (Exception $e) {
         $err_msg['common'] = MSG09;
+        $err_msg['error_msg'] = $err_msg;
     }
 } else {
     // スレッドIDがない＝表示できないからトップへ
@@ -78,10 +78,14 @@ if(!empty($_POST)) {
                     ':updated_at' => date('Y-m-d H:i:s'),
             );
             $stmt3 = queryPost($dbh3, $sql3, $data3);
-            header("Location:thread_detail.php?id=".$thread_id);
+            header("Location:thread_detail.php?id=".$thread_id."&page=1");
         } catch (Exception $e) {
             $err_msg['common'] = MSG09;
+            $err_msg['error_msg'] = $err_msg;
         }
+    } else {
+        $_SESSION['error_msg'] = $err_msg;
+        header("Location:thread_detail.php?id=".$thread_id."&page=1");
     }
 }
 
@@ -152,7 +156,16 @@ if(!empty($_POST)) {
                         <input type="hidden" name="thread_id" value="<?php echo $thread_id; ?>">
                     </div>
                     <div class="err-msg">
-                        <?php if(!empty($err_msg['comment'])) echo '＊'.$err_msg['comment']  ?>
+                        <?php
+                        if(!empty($_SESSION['error_msg']['comment'])) {
+                            echo '＊' . $_SESSION['error_msg']['comment'];
+                        }
+                        ?>
+                        <?php
+                        if(!empty($_SESSION['error_msg']['common'])) {
+                            echo '＊' . $_SESSION['error_msg']['common'];
+                        }
+                        ?>
                     </div>
                     <div class="form-group btn-right">
                         <input class="btn btn-default" type="submit" value="コメントする">
