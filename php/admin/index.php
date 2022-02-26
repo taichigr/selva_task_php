@@ -2,7 +2,6 @@
 // adminトップ画面
 require('../function.php');
 require('auth.php');
-print_r($_SESSION);
 ?>
 
 <!doctype html>
