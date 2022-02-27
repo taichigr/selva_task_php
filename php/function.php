@@ -235,3 +235,27 @@ function watchUserLike($member_id, $comment_id) {
 
     }
 }
+
+// 性別表示
+function showGender($gender) {
+    if($gender == 1){
+        return '男性';
+    } else {
+       return '女性';
+    }
+}
+
+//===============================
+// adminユーザー一覧
+//===============================
+//function getAllUsers() {
+//    $dbh = dbConnect();
+//    $sql = 'SELECT id, name_sei, name_mei, gender, pref_name, address, created_at
+//                    FROM members
+//                    ORDER BY created_at DESC
+//            ';
+//    $data = array(
+//    );
+//    $stmt = queryPost($dbh, $sql, $data);
+//    return $results = $stmt->fetchAll();
+//}

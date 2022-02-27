@@ -16,9 +16,12 @@ require('auth.php');
 </head>
 <body>
 <?php require('header.php'); ?>
-<main>
-    <div class="container">
+<main class="admin-main">
+    <div class="container admin-container">
         <h2>トップページ</h2>
+        <div>
+            <a class="btn btn-admin-member" href="member.php">会員一覧</a>
+        </div>
     </div>
 </main>
 <?php //require('footer.php'); ?>

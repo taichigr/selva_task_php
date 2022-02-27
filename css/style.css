@@ -138,6 +138,9 @@ main {
     box-sizing: border-box;
     overflow: hidden;
 }
+.admin-container {
+    border: none;
+}
 /*.container-thread-detail {*/
 /*    margin: 0 auto;*/
 /*    width: 640px;*/
@@ -178,7 +181,7 @@ main {
     color: #fff;
     background-color: #406bca;
 }
-.btn-back {
+.btn-back, .btn-admin-member {
     color: #406bca;
     background-color: #fff;
     border: 1px solid #406bca;
@@ -319,4 +322,49 @@ table tr td a {
     height: 60px;
     line-height: 60px;
     text-align: right;
+}
+.admin-main {
+    background-color: #dceaf8;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+}
+.header-left h2 {
+    padding-left: 10px;
+}
+.member-table {
+    width: 100%;
+    border: 2px solid #000000;
+}
+.member-table td {
+    border:1px solid #000000;
+}
+.member-table-left {
+    background-color: #c1c1c1;
+    width: 150px;
+}
+.member-table-right {
+}
+.member-show-container {
+    margin-top: 30px;
+}
+.member-showtable {
+    width: 100%;
+    border: 2px solid #000000;
+}
+.member-showtable th, td {
+    border:1px solid #000000;
+}
+.member-showtable-header {
+    background-color: #c1c1c1;
+}
+.member-showtable-body {
+}
+
+.submit-order {
+    border:none;
+    background-color: #c1c1c1;
+}
+.submit-order:hover {
+    cursor: pointer;
 }
