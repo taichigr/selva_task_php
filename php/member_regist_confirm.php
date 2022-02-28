@@ -51,6 +51,7 @@ if(!empty($_POST)) {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
 <main>
     <div class="container">
         <h2>会員情報登録フォーム</h2>
@@ -115,4 +116,11 @@ if(!empty($_POST)) {
     </div>
 </main>
 </body>
+<script>
+    $(function() {
+        $('form').submit(function () {
+            $(this).find(':submit').prop('disabled', 'true');
+        });
+    })
+</script>
 </html>
