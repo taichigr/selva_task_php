@@ -17,6 +17,7 @@ if(!empty($_POST)){
     validRequired($nameSei, 'name_sei');
     validRequired($nameMei, 'name_mei');
     validRequired($gender, 'gender');
+    validGender($gender, 'gender');
     validRequired($prefName, 'pref_name');
     validNameLength($nameSei, 'name_sei');
     validNameLength($nameMei, 'name_mei');

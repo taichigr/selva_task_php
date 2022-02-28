@@ -38,6 +38,12 @@ function validRequired($str, $key) {
         $err_msg[$key] = MSG01;
     }
 }
+function validGender($str, $key) {
+    if($str != "1" || $str != "2"){
+        global $err_msg;
+        $err_msg[$key] = MSG09;
+    }
+}
 function validCommentRequired($str, $key) {
     if($str === '') {
         global $err_msg;
@@ -248,14 +254,37 @@ function showGender($gender) {
 //===============================
 // adminユーザー一覧
 //===============================
-//function getAllUsers() {
+function getAllUsers() {
+    $dbh = dbConnect();
+    $sql = 'SELECT id, name_sei, name_mei, gender, pref_name, address, created_at
+                    FROM members
+                    ORDER BY created_at DESC
+            ';
+    $data = array(
+    );
+    $stmt = queryPost($dbh, $sql, $data);
+    return $results = $stmt->fetchAll();
+}
+//function countMembers() {
 //    $dbh = dbConnect();
-//    $sql = 'SELECT id, name_sei, name_mei, gender, pref_name, address, created_at
+//    $sql = 'SELECT count(*)
 //                    FROM members
-//                    ORDER BY created_at DESC
 //            ';
 //    $data = array(
 //    );
 //    $stmt = queryPost($dbh, $sql, $data);
-//    return $results = $stmt->fetchAll();
+//    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+//    $count = array_shift($result);
+//    return $count;
 //}
+
+function showNext($currentPageNum) {
+    if($currentPageNum != 1){
+        echo "disabled";
+    }
+}
+function showPrevious($currentPageNum, $maxPageNum) {
+    if($currentPageNum != $maxPageNum){
+        echo "disabled";
+    }
+}
