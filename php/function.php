@@ -39,7 +39,7 @@ function validRequired($str, $key) {
     }
 }
 function validGender($str, $key) {
-    if($str != "1" || $str != "2"){
+    if($str != "1" && $str != "2"){
         global $err_msg;
         $err_msg[$key] = MSG09;
     }
