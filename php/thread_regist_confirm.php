@@ -33,8 +33,7 @@ if(!empty($_POST)) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>会員登録完了</title>
-    <link rel="stylesheet" href="../css/style.css?<?php echo date("Ymd-Hi"); ?>
-    ">
+    <link rel="stylesheet" href="../css/style.css?<?php echo date("Ymd-Hi"); ?>">
 </head>
 <body>
 <?php require('header.php'); ?>

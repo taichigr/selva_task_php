@@ -99,7 +99,7 @@ if(!empty($_POST)) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>スレッド詳細</title>
     <link rel ="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css?<?php echo date("Ymd-Hi"); ?>">
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
