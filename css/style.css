@@ -262,6 +262,7 @@ table tr td a {
     padding-bottom: 20px;
     margin-top: 10px;
     border-bottom: 1px #cccccc solid;
+    word-break: break-all;
 }
 .gray-area-inner .active {
     color: #406bca;
@@ -367,4 +368,11 @@ table tr td a {
 }
 .submit-order:hover {
     cursor: pointer;
+}
+.active {
+    color: red;
+}
+.pagination .disabled {
+    pointer-events:none;
+    color: #7d7d7d;
 }
