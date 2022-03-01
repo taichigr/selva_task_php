@@ -40,7 +40,7 @@ if(!empty($thread_id)) {
                     LEFT JOIN members AS m
                     ON c.member_id = m.id
                     WHERE thread_id = :id
-                    ORDER BY c.created_at DESC
+                    ORDER BY c.created_at ASC 
                     LIMIT 5 OFFSET '.($_GET['page']-1)*5;
 
         $data4 = array(
@@ -136,7 +136,7 @@ if(!empty($_POST)) {
         <?php if(!empty($comments)): ?>
             <?php foreach($comments as $comment): ?>
                 <div class="comment-area">
-                    <p class="comment-area-username">1. <?php echo $comment['name_sei'].'　'.$comment['name_mei'] ?>　<?php echo date("Y.m.d h:i", strtotime($comment['created_at'])) ?></p>
+                    <p class="comment-area-username"><?php echo $comment['id'] ?>. <?php echo $comment['name_sei'].'　'.$comment['name_mei'] ?>　<?php echo date("Y.m.d h:i", strtotime($comment['created_at'])) ?></p>
                     <p class="comment-area-comment"><?php echo nl2br($comment['comment']) ?></p>
                     <div class="icon-area">
                         <form action="thread_like.php" method="post">
