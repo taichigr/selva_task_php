@@ -376,3 +376,19 @@ table tr td a {
     pointer-events:none;
     color: #7d7d7d;
 }
+/*ページネーション*/
+.pagination {
+    margin-top: 10px;
+    height: 40px;
+}
+.pagination-list {
+    display: flex;
+    justify-content: right;
+}
+.pagination-list li {
+    display: block;
+    margin: 5px;
+    padding: 5px 10px;
+    border: 1px solid #000000;
+    background-color: #fff;
+}

@@ -278,13 +278,24 @@ function getAllUsers() {
 //    return $count;
 //}
 
-function showNext($currentPageNum) {
-    if($currentPageNum != 1){
+//function showNext($currentPageNum) {
+//    if($currentPageNum != 1){
+//        echo "disabled";
+//    }
+//}
+//function showPrevious($currentPageNum, $maxPageNum) {
+//    if($currentPageNum != $maxPageNum){
+//        echo "disabled";
+//    }
+//}
+
+function showNext($currentPageNum, $maxPageNum) {
+    if($currentPageNum == $maxPageNum){
         echo "disabled";
     }
 }
-function showPrevious($currentPageNum, $maxPageNum) {
-    if($currentPageNum != $maxPageNum){
+function showPrevious($currentPageNum) {
+    if($currentPageNum == 1){
         echo "disabled";
     }
 }
