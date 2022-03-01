@@ -1,5 +1,6 @@
 <?php
 require('function.php');
+require('auth.php');
 if(!empty($_POST)) {
     $id = $_POST['id'];
     try {
