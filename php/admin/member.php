@@ -281,7 +281,7 @@ function returnRequestUrlPage($url) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css?<?php echo date("Ymd-Hi"); ?>">
     <title>会員一覧</title>
 </head>
 <body>
@@ -297,6 +297,9 @@ function returnRequestUrlPage($url) {
     </div>
 </header><main class="admin-main">
     <div class="container admin-container">
+        <div style="height: 40px">
+            <a class="btn btn-default" href="">会員登録</a>
+        </div>
         <div class="member-form-container">
             <form id="member-search" action="member.php" method="get">
                 <table class="member-table">
@@ -351,6 +354,7 @@ function returnRequestUrlPage($url) {
                         登録日時
                         <button name="orderByCreatedAt" value="<?php echo !empty($orderByCreatedAt)? $orderByCreatedAt: $orderByCreatedAt = "asc" ?>" class="submit-order" type="submit" form="member-search">▼</button>
                     </th>
+                    <th>編集</th>
                 </tr>
                 <?php if(!empty($results)): ?>
                     <?php foreach ($results as $result): ?>
@@ -360,6 +364,7 @@ function returnRequestUrlPage($url) {
                             <td><?php echo showGender($result['gender']) ?></td>
                             <td><?php echo $result['pref_name'].$result['address'] ?></td>
                             <td><?php echo date('Y/m/d', strtotime($result['created_at'])) ?></td>
+                            <td><a href="">編集</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
