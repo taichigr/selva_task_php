@@ -88,6 +88,11 @@ if(!empty($_POST)) {
         header("Location:thread_detail.php?id=".$thread_id."&page=1");
     }
 }
+//$commentIndexs = array();
+//for($i = 1; $i <= 5; $i++){
+//    $commentIndexs[] = (($currentPage-1)*5)+$i;
+//}
+
 
 ?>
 <!doctype html>
@@ -134,9 +139,9 @@ if(!empty($_POST)) {
             <p class="thread-detail-content"><?php if(!empty($result)) echo nl2br($result['content']) ?></p>
         </div>
         <?php if(!empty($comments)): ?>
-            <?php foreach($comments as $comment): ?>
+            <?php foreach($comments as $index => $comment): ?>
                 <div class="comment-area">
-                    <p class="comment-area-username"><?php echo $comment['id'] ?>. <?php echo $comment['name_sei'].'　'.$comment['name_mei'] ?>　<?php echo date("Y.m.d h:i", strtotime($comment['created_at'])) ?></p>
+                    <p class="comment-area-username"><?php echo ($index+1)+($currentPage-1)*5 ?>. <?php echo $comment['name_sei'].'　'.$comment['name_mei'] ?>　<?php echo date("Y.m.d h:i", strtotime($comment['created_at'])) ?></p>
                     <p class="comment-area-comment"><?php echo nl2br($comment['comment']) ?></p>
                     <div class="icon-area">
                         <form action="thread_like.php" method="post">
