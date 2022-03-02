@@ -87,6 +87,7 @@ if(!empty($_GET)) {
         $countMembers = array_shift($resultCount);
         $totalPageNum = ceil($countMembers/$listSpan);
     } else {
+        // ORは（）で囲う
             try {
                 $dbh = dbConnect();
                 $sqlCount = 'SELECT count(*) FROM members WHERE';
@@ -96,7 +97,7 @@ if(!empty($_GET)) {
                 if(!empty($id)) {
                     $sqlAttach .= ' id = :id';
                     if(!empty($male) && !empty($female)) {
-                        $sqlAttach .= ' AND gender = :male OR gender = :female';
+                        $sqlAttach .= ' AND (gender = :male OR gender = :female)';
                     } elseif(!empty($male) && empty($female)) {
                         $sqlAttach .= ' AND gender = :male';
                     } elseif(!empty($female) && empty($male)) {
@@ -106,17 +107,17 @@ if(!empty($_GET)) {
                         $sqlAttach .= ' AND pref_name = :pref_name';
                     }
                     if(!empty($free)) {
-                        $sqlAttach .= ' AND name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free';
+                        $sqlAttach .= ' AND (name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                     }
                 }
                 // $idがなくて、性別があるときの処理
                 if(empty($id) && !empty($male) && !empty($female)) {
-                    $sqlAttach .= ' gender = :male OR gender = :female';
+                    $sqlAttach .= ' (gender = :male OR gender = :female)';
                     if($pref_name !== "") {
                         $sqlAttach .= ' AND pref_name = :pref_name';
                     }
                     if(!empty($free)) {
-                        $sqlAttach .= ' AND name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free';
+                        $sqlAttach .= ' (AND name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                     }
                 } elseif(empty($id) && !empty($male) && empty($female)) {
                     $sqlAttach .= ' gender = :male';
@@ -124,7 +125,7 @@ if(!empty($_GET)) {
                         $sqlAttach .= ' AND pref_name = :pref_name';
                     }
                     if(!empty($free)) {
-                        $sqlAttach .= ' AND name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free';
+                        $sqlAttach .= ' AND (name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                     }
                 } elseif(empty($id) && !empty($female) && empty($male)) {
                     $sqlAttach .= ' gender = :female';
@@ -132,19 +133,19 @@ if(!empty($_GET)) {
                         $sqlAttach .= ' AND pref_name = :pref_name';
                     }
                     if(!empty($free)) {
-                        $sqlAttach .= ' AND name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free';
+                        $sqlAttach .= ' AND (name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                     }
                 }
                 // $id,性別がないときの処理
                 if(empty($id) && empty($male) && empty($female) && $pref_name !== "") {
                     $sqlAttach .= ' pref_name = :pref_name';
                     if(!empty($free)) {
-                        $sqlAttach .= ' AND name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free';
+                        $sqlAttach .= ' AND (name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                     }
                 }
                 // $id, 性別、$pref_nameがないときの処理
                 if(empty($id) && empty($male) && empty($female) && $pref_name === "" && !empty($free)) {
-                    $sqlAttach .= ' name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free';
+                    $sqlAttach .= ' (name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                 }
                 // 昇順降順
                 if(!empty($orderById)){
@@ -298,7 +299,7 @@ function returnRequestUrlPage($url) {
 </header><main class="admin-main">
     <div class="container admin-container">
         <div style="height: 40px">
-            <a class="btn btn-default" href="">会員登録</a>
+            <a class="btn btn-default" href="member_regist.php">会員登録</a>
         </div>
         <div class="member-form-container">
             <form id="member-search" action="member.php" method="get">
@@ -401,7 +402,7 @@ function returnRequestUrlPage($url) {
                         $maxPageNum = $currentPageNum + 1;
                     }
                     ?>
-                    <li class="list-item <?php showPrevious($currentPageNum) ?>"><a href="<?php echo returnRequestUrlPage($_SERVER['REQUEST_URI']); ?>1">前へ></a></li>
+                    <li class="list-item <?php showPrevious($currentPageNum) ?>"><a href="<?php echo returnRequestUrlPage($_SERVER['REQUEST_URI']); ?><?php echo $currentPageNum - 1; ?>">前へ></a></li>
                     <?php
                     for($i = $minPageNum; $i <= $maxPageNum; $i++):
                         ?>
