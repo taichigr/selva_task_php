@@ -3,6 +3,8 @@
 require('../function.php');
 require('auth.php');
 
+// デフォルトは降順
+
 // 現在ページ
 $currentPageNum = (!empty($_GET['page'])) ? $_GET['page']: 1;
 // 表示件数
@@ -73,6 +75,9 @@ if(!empty($_GET)) {
                 $sqlAttach .= ' ORDER BY created_at ASC';
                 $orderByCreatedAt = "desc";
             }
+        }
+        if(empty($orderById) && empty($orderByCreatedAt)) {
+            $sqlAttach .= ' ORDER BY id DESC';
         }
         $sqlCount .= $sqlAttach;
         $sql .= $sqlAttach;
