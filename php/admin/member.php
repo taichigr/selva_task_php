@@ -117,7 +117,7 @@ if(!empty($_GET)) {
                         $sqlAttach .= ' AND pref_name = :pref_name';
                     }
                     if(!empty($free)) {
-                        $sqlAttach .= ' (AND name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
+                        $sqlAttach .= ' AND (name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                     }
                 } elseif(empty($id) && !empty($male) && empty($female)) {
                     $sqlAttach .= ' gender = :male';
@@ -173,6 +173,7 @@ if(!empty($_GET)) {
                 $sql .= $sqlAttach;
                 $sql .= ' LIMIT '.$listSpan.' OFFSET '. $currentMinNum;
 
+//                print_r($sql);exit;
 
                 $data = array();
                 if(!empty($id)) {
@@ -261,6 +262,7 @@ function returnRequestUrlPage($url) {
     }
     $lastStr = substr($url, -1);
     $lastStrDescAsc = substr($url, -2);
+    $lastStrPhp = substr($url, -3);
     if($lastStr === '?'){
         return $url.'page=';
     } elseif($lastStr === '=') {
@@ -269,7 +271,11 @@ function returnRequestUrlPage($url) {
         if($lastStrDescAsc === 'sc') {
             return $url. '&page=';
         } else {
-            return $url.'?page=';
+            if($lastStrPhp === 'php') {
+                return $url. '?page=';
+            }else {
+                return $url.'&page=';
+            }
         }
     }
 }
