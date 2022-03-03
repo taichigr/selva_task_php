@@ -2,6 +2,184 @@
 // adminトップ画面
 require('../function.php');
 require('auth.php');
+// TODO パスワードをDBからとってきたときにハッシュ化解除？
+// 編集　パスワードがからのとき　そもそもパスワードを扱わない
+// 編集　パスワードが入っているとき　普通に登録
+// 登録　パスワードを普通に登録
+
+if(!empty($_GET)) {
+    // 編集処理の最初の画面表示
+    $getMethodResult = getUser($_GET['id']);
+    // 代入
+    $nameSei = $getMethodResult['name_sei'];
+    $nameMei = $getMethodResult['name_mei'];
+    $gender = $getMethodResult['gender'];
+    $prefName = $getMethodResult['pref_name'];
+    $address = $getMethodResult['address'];
+    $password = $getMethodResult['password'];
+    $email = $getMethodResult['email'];
+}
+
+
+if(!empty($_POST)) {
+    print_r($_POST);
+    if($_POST['editFlg'] === 'true') {
+        echo 'editflgはtrueです<br>';
+        if(!empty($_POST['password'])) {
+            $id = $_POST['id'];
+            $editFlg = $_POST['editFlg'];
+            $nameSei = $_POST['name_sei'];
+            $nameMei = $_POST['name_mei'];
+            $gender = $_POST['gender'];
+            $prefName = $_POST['pref_name'];
+            $address = $_POST['address'];
+            $password = $_POST['password'];
+            $passwordConfirm = $_POST['password-confirm'];
+            $email = $_POST['email'];
+            // バリデーション
+            validRequired($nameSei, 'name_sei');
+            validRequired($nameMei, 'name_mei');
+            validRequired($gender, 'gender');
+            validGender($gender, 'gender');
+            validRequired($prefName, 'pref_name');
+            validNameLength($nameSei, 'name_sei');
+            validNameLength($nameMei, 'name_mei');
+            validPrefNameRequired($prefName, 'pref_name');
+            validAddressLength($address, 'address');
+            validPassword($password, 'password');
+            validMatch($password, $passwordConfirm, 'password');
+            validEmail($email, 'email');
+            validAdminEmailDuplication($id, $email);
+
+            if(empty($err_msg)) {
+                $_SESSION['editFlg'] = $editFlg;
+                $_SESSION['id'] = $id;
+                $_SESSION['name_sei'] = $nameSei;
+                $_SESSION['name_mei'] = $nameMei;
+                $_SESSION['gender'] = $gender;
+                $_SESSION['pref_name'] = $prefName;
+                $_SESSION['address'] = $address;
+                $_SESSION['password'] = $password;
+                $_SESSION['email'] = $email;
+
+                header("Location:member_regist_confirm.php");
+            }
+        } else {
+            echo "パスワードなしの処理だす";
+            // パスワードが入力されていない場合、つまり、パスワードはそのまま
+            $id = $_POST['id'];
+            $editFlg = $_POST['editFlg'];
+            $nameSei = $_POST['name_sei'];
+            $nameMei = $_POST['name_mei'];
+            $gender = $_POST['gender'];
+            $prefName = $_POST['pref_name'];
+            $address = $_POST['address'];
+            $email = $_POST['email'];
+
+            // バリデーション
+            validRequired($nameSei, 'name_sei');
+            validRequired($nameMei, 'name_mei');
+            validRequired($gender, 'gender');
+            validGender($gender, 'gender');
+            validRequired($prefName, 'pref_name');
+            validNameLength($nameSei, 'name_sei');
+            validNameLength($nameMei, 'name_mei');
+            validPrefNameRequired($prefName, 'pref_name');
+            validAddressLength($address, 'address');
+            validEmail($email, 'email');
+            validAdminEmailDuplication($id, $email);
+
+            if(empty($err_msg)) {
+                $_SESSION['editFlg'] = $editFlg;
+                $_SESSION['id'] = $id;
+                $_SESSION['name_sei'] = $nameSei;
+                $_SESSION['name_mei'] = $nameMei;
+                $_SESSION['gender'] = $gender;
+                $_SESSION['pref_name'] = $prefName;
+                $_SESSION['address'] = $address;
+                $_SESSION['email'] = $email;
+                echo "セッション：";
+                print_r($_SESSION);
+                echo "ポスト:";
+                print_r($_POST);
+                header("Location:member_regist_confirm.php");
+            }
+        }
+
+
+    } else {
+        echo 'editflgはfalseです<br>';
+
+        // $editFlgがfalseの場合は新規登録
+        $editFlg = $_POST['editFlg'];
+        $nameSei = $_POST['name_sei'];
+        $nameMei = $_POST['name_mei'];
+        $gender = $_POST['gender'];
+        $prefName = $_POST['pref_name'];
+        $address = $_POST['address'];
+        $password = $_POST['password'];
+        $passwordConfirm = $_POST['password-confirm'];
+        $email = $_POST['email'];
+
+        // バリデーション
+        validRequired($nameSei, 'name_sei');
+        validRequired($nameMei, 'name_mei');
+        validRequired($gender, 'gender');
+        validGender($gender, 'gender');
+        validRequired($prefName, 'pref_name');
+        validNameLength($nameSei, 'name_sei');
+        validNameLength($nameMei, 'name_mei');
+        validPrefNameRequired($prefName, 'pref_name');
+        validAddressLength($address, 'address');
+        validPassword($password, 'password');
+        validMatch($password, $passwordConfirm, 'password');
+        validEmail($email, 'email');
+        validEmailDuplication($email);
+
+        if(empty($err_msg)) {
+            $_SESSION['editFlg'] = $editFlg;
+            $_SESSION['name_sei'] = $nameSei;
+            $_SESSION['name_mei'] = $nameMei;
+            $_SESSION['gender'] = $gender;
+            $_SESSION['pref_name'] = $prefName;
+            $_SESSION['address'] = $address;
+            $_SESSION['password'] = $password;
+            $_SESSION['email'] = $email;
+
+            header("Location:member_regist_confirm.php");
+        }
+    }
+
+
+    // バリデーション
+
+
+    if(empty($err_msg)) {
+
+//            $dbh = dbConnect();
+//            $sql = 'UPDATE members
+//                    SET name_sei = :name_sei,
+//                        name_mei = :name_mei,
+//                        gender = :gender,
+//                        pref_name = :pref_name,
+//                        address = :address,
+//                        password = :password,
+//                        email = :email
+//                WHERE id = :id';
+//            $data = array(
+//                    ':id' => $id,
+//                    ':name_sei' => $nameSei,
+//                    ':name_mei' => $nameMei,
+//                    ':gender' => $gender,
+//                    'pref_name' => $prefName,
+//                    ':address' => $address,
+//                    ':password' =>
+//            );
+//            $stmt = queryPost($dbh, $sql, $data);
+//            $getMethodResult = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    }
+}
 
 ?>
 
@@ -26,9 +204,11 @@ require('auth.php');
             <li><a class="btn btn-header" href="index.php">トップへ戻る</a></li>
         </ul>
     </div>
-</header><main class="admin-main">
+</header>
+<main class="admin-main">
     <div class="container admin-container">
-        <form method="post" action="member_regist.php">
+        <form method="post" action="">
+            <input type="hidden" name="editFlg" value="<?php echo !empty($getMethodResult)? 'true': 'false' ?>">
             <div class="err-msg">
                 <?php
                 if(!empty($err_msg['common'])) echo $err_msg['common'];
@@ -36,7 +216,17 @@ require('auth.php');
             </div>
             <div class="form-group">
                 <lavel>ID</lavel>
-                登録後に自動採番
+                <?php
+                    if(!empty($getMethodResult['id'])) {
+                        echo $getMethodResult['id'];
+                    } else {
+                        echo '登録後に自動採番';
+                    }
+                ?>
+                <?php if(!empty($getMethodResult['id'])): ?>
+                    <input type="hidden" name="id" value="<?php echo $getMethodResult['id'] ?>">
+                <?php endif;  ?>
+<!--                場合によってはelseifを作ってからのinputのvalueにid-->
             </div>
             <div class="form-group">
                 氏名
@@ -79,9 +269,11 @@ require('auth.php');
                 <lavel>都道府県</lavel>
                 <select name="pref_name">
                     <option value="0">選択してください</option>
-                    <?php foreach($prefectures as $prefecture): ?>
-                        <option value="<?php echo $prefecture ?>" <?php if(!empty($prefName) && $prefecture === $prefName) echo 'selected'; ?>><?php echo $prefecture ?></option>
-                    <?php endforeach; ?>
+                    <?php if(!empty($prefectures)): ?>
+                        <?php foreach($prefectures as $prefecture): ?>
+                            <option value="<?php echo $prefecture ?>" <?php if(!empty($prefName) && $prefecture === $prefName) echo 'selected'; ?>><?php echo $prefecture ?></option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </select>
                 <div></div>
                 <div style="margin-left: 37px; margin-top: 10px">
@@ -103,11 +295,11 @@ require('auth.php');
 
             <div class="form-group">
                 <lavel style="width: 115px; display: inline-block">パスワード</lavel>
-                <input style="width: 260px;" type="password" name="password" required>
+                <input style="width: 260px;" type="password" name="password">
             </div>
             <div class="form-group">
                 <lavel style="width: 115px; display: inline-block">パスワード確認</lavel>
-                <input style="width: 260px;" type="password" name="password-confirm" required>
+                <input style="width: 260px;" type="password" name="password-confirm">
             </div>
             <div class="err-msg">
                 <?php

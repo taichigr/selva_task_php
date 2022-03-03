@@ -23,7 +23,57 @@ define('MSG13', '字以内で入力してください');
 define('MSG14', 'コメントは入力必須です');
 define('MSG15', 'ログインできません');
 define('MSG16', '7~10字で入力してください');
+define('MSG17', 'このメールアドレスは使用できません');
 
+$prefectures = array(
+    1 => '北海道',
+    2 => '青森県',
+    3 => '岩手県',
+    4 => '宮城県',
+    5 => '秋田県',
+    6 => '山形県',
+    7 => '福島県',
+    8 => '茨城県',
+    9 => '栃木県',
+    10 => '群馬県',
+    11 => '埼玉県',
+    12 => '千葉県',
+    13 => '東京都',
+    14 => '神奈川県',
+    15 => '山梨県',
+    16 => '長野県',
+    17 => '新潟県',
+    18 => '富山県',
+    19 => '石川県',
+    20 => '福井県',
+    21 => '岐阜県',
+    22 => '静岡県',
+    23 => '愛知県',
+    24 => '三重県',
+    25 => '滋賀県',
+    26 => '京都府',
+    27 => '大阪府',
+    28 => '兵庫県',
+    29 => '奈良県',
+    30 => '和歌山県',
+    31 => '鳥取県',
+    32 => '島根県',
+    33 => '岡山県',
+    34 => '広島県',
+    35 => '山口県',
+    36 => '徳島県',
+    37 => '香川県',
+    38 => '愛媛県',
+    39 => '高知県',
+    40 => '福岡県',
+    41 => '佐賀県',
+    42 => '長崎県',
+    43 => '熊本県',
+    44 => '大分県',
+    45 => '宮崎県',
+    46 => '鹿児島県',
+    47 => '沖縄県'
+);
 
 
 
@@ -138,6 +188,32 @@ function validEmail($str, $key) {
     validRequired($key, $str);
     validEmailFormat($str, $key);
     validEmailLength($str, $key);
+}
+
+// adminのメールアドレス重複チェック（他人のメアドと被らないか）
+function validAdminEmailDuplication($id, $email) {
+    global $err_msg;
+    try {
+        echo "メールアドレス";
+        print_r($email);
+        $dbh = dbConnect();
+        $sql = 'SELECT id FROM members WHERE email = :email';
+        $data = array(':email' => $email);
+        $stmt = queryPost($dbh, $sql, $data);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo "<br>";
+        echo '$result:';
+        var_dump($result);
+        echo "<br>";
+
+
+        if($result['id'] !== $id) {
+            $err_msg['email'] = MSG17;
+        }
+    } catch (Exception $e) {
+        echo $e;
+        $err_msg['common'] = MSG09;
+    }
 }
 
 //===============================
@@ -278,16 +354,6 @@ function getAllUsers() {
 //    return $count;
 //}
 
-//function showNext($currentPageNum) {
-//    if($currentPageNum != 1){
-//        echo "disabled";
-//    }
-//}
-//function showPrevious($currentPageNum, $maxPageNum) {
-//    if($currentPageNum != $maxPageNum){
-//        echo "disabled";
-//    }
-//}
 
 function showNext($currentPageNum, $maxPageNum) {
     if($currentPageNum == $maxPageNum){
@@ -297,5 +363,29 @@ function showNext($currentPageNum, $maxPageNum) {
 function showPrevious($currentPageNum) {
     if($currentPageNum == 1){
         echo "disabled";
+    }
+}
+
+function getUser($id) {
+    try {
+        $dbh = dbConnect();
+        $sql = 'SELECT id, name_sei, name_mei, gender, pref_name, address, password, email 
+                FROM members 
+                WHERE id = :id';
+        $data = array(':id' => $id);
+        $stmt = queryPost($dbh, $sql, $data);
+        return $getMethodResult = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch(Exception $e) {
+        $err_msg['common'] = MSG09;
+    }
+}
+
+function judgeEditOrRegist($editFlg, $textEdit, $textRegist) {
+    if(!empty($editFlg)) {
+        if($editFlg == "true") {
+            echo $textEdit;
+        }else {
+            echo $textRegist;
+        }
     }
 }
