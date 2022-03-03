@@ -22,7 +22,7 @@ try {
     $dbh2 = dbConnect();
     $sql2 = 'SELECT id, name_sei, name_mei, gender, pref_name, address, created_at
                     FROM members
-                    ORDER BY created_at DESC
+                    ORDER BY id DESC
             ';
     $sql2 .= ' LIMIT '.$listSpan.' OFFSET '. $currentMinNum;
 
@@ -178,7 +178,6 @@ if(!empty($_GET)) {
                 $sql .= $sqlAttach;
                 $sql .= ' LIMIT '.$listSpan.' OFFSET '. $currentMinNum;
 
-//                print_r($sql);exit;
 
                 $data = array();
                 if(!empty($id)) {
@@ -327,7 +326,7 @@ function returnRequestUrlPage($url) {
                             <td><?php echo showGender($result['gender']) ?></td>
                             <td><?php echo $result['pref_name'].$result['address'] ?></td>
                             <td><?php echo date('Y/m/d', strtotime($result['created_at'])) ?></td>
-                            <td><a href="member_regist.php?id=<?php echo $result['id'] ?>">編集</a></td>
+                            <td style="width: 45px"><a href="member_regist.php?id=<?php echo $result['id'] ?>">編集</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

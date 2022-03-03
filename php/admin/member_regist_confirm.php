@@ -39,9 +39,6 @@ if(!empty($_POST)) {
                     ':email' => $_POST['email'],
                     ':updated_at' => date('Y-m-d H:i:s'),
                 );
-                print_r($sql);
-                echo "<br>";
-                print_r($data);
                 $stmt = queryPost($dbh, $sql, $data);
                 header("Location:member.php");
             } catch (Exception $e) {

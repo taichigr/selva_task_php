@@ -2,10 +2,7 @@
 // adminトップ画面
 require('../function.php');
 require('auth.php');
-// TODO パスワードをDBからとってきたときにハッシュ化解除？
-// 編集　パスワードがからのとき　そもそもパスワードを扱わない
-// 編集　パスワードが入っているとき　普通に登録
-// 登録　パスワードを普通に登録
+
 
 if(!empty($_GET)) {
     // 編集処理の最初の画面表示
@@ -22,9 +19,7 @@ if(!empty($_GET)) {
 
 
 if(!empty($_POST)) {
-    print_r($_POST);
     if($_POST['editFlg'] === 'true') {
-        echo 'editflgはtrueです<br>';
         if(!empty($_POST['password'])) {
             $id = $_POST['id'];
             $editFlg = $_POST['editFlg'];
@@ -98,10 +93,6 @@ if(!empty($_POST)) {
                 $_SESSION['pref_name'] = $prefName;
                 $_SESSION['address'] = $address;
                 $_SESSION['email'] = $email;
-                echo "セッション：";
-                print_r($_SESSION);
-                echo "ポスト:";
-                print_r($_POST);
                 header("Location:member_regist_confirm.php");
             }
         }
@@ -148,36 +139,6 @@ if(!empty($_POST)) {
 
             header("Location:member_regist_confirm.php");
         }
-    }
-
-
-    // バリデーション
-
-
-    if(empty($err_msg)) {
-
-//            $dbh = dbConnect();
-//            $sql = 'UPDATE members
-//                    SET name_sei = :name_sei,
-//                        name_mei = :name_mei,
-//                        gender = :gender,
-//                        pref_name = :pref_name,
-//                        address = :address,
-//                        password = :password,
-//                        email = :email
-//                WHERE id = :id';
-//            $data = array(
-//                    ':id' => $id,
-//                    ':name_sei' => $nameSei,
-//                    ':name_mei' => $nameMei,
-//                    ':gender' => $gender,
-//                    'pref_name' => $prefName,
-//                    ':address' => $address,
-//                    ':password' =>
-//            );
-//            $stmt = queryPost($dbh, $sql, $data);
-//            $getMethodResult = $stmt->fetch(PDO::FETCH_ASSOC);
-
     }
 }
 
