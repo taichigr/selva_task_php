@@ -152,13 +152,29 @@ if(!empty($_POST)) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../css/style.css?<?php echo date("Ymd-Hi"); ?>">
-    <title>会員登録</title>
+    <title>
+        <?php
+        if(!empty($_GET)) {
+            echo '会員編集';
+        } else {
+            echo '会員登録';
+        }
+        ?>
+    </title>
 </head>
 <body>
 <script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo=" crossorigin="anonymous"></script>
 <header class="admin-header">
     <div class="header-left">
-        <h2>会員登録</h2>
+        <h2>
+            <?php
+            if(!empty($_GET)) {
+                echo '会員編集';
+            } else {
+                echo '会員登録';
+            }
+            ?>
+        </h2>
     </div>
     <div class="header-right">
         <ul>

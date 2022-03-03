@@ -21,7 +21,7 @@ try {
 
     $dbh2 = dbConnect();
     $sql2 = 'SELECT id, name_sei, name_mei, gender, pref_name, address, created_at
-                    FROM members
+                    FROM members WHERE deleted_at IS NULL
                     ORDER BY id DESC
             ';
     $sql2 .= ' LIMIT '.$listSpan.' OFFSET '. $currentMinNum;
@@ -55,7 +55,7 @@ if(!empty($_GET)) {
         $sqlCount = 'SELECT count(*) FROM members';
 
         $sql = 'SELECT id, name_sei, name_mei, gender, pref_name, address, created_at 
-                    FROM members 
+                    FROM members WHERE deleted_at IS NULL
             ';
         $sqlAttach = '';
         if(!empty($orderById)){
@@ -152,6 +152,7 @@ if(!empty($_GET)) {
                 if(empty($id) && empty($male) && empty($female) && $pref_name === "" && !empty($free)) {
                     $sqlAttach .= ' (name_sei LIKE :free OR name_mei LIKE :free OR email LIKE :free)';
                 }
+                $sqlAttach .= ' AND deleted_at IS NULL';
                 // 昇順降順
                 if(!empty($orderById)){
                     if($orderById === "desc") {
@@ -301,7 +302,9 @@ function returnRequestUrlPage($url) {
                 </div>
             </form>
         </div>
+    </div>
 
+    <div class="container-member-list">
         <div class="member-show-container">
             <table class="member-showtable">
                 <tr class="member-showtable-header">
@@ -317,16 +320,20 @@ function returnRequestUrlPage($url) {
                         <button name="orderByCreatedAt" value="<?php echo !empty($orderByCreatedAt)? $orderByCreatedAt: $orderByCreatedAt = "asc" ?>" class="submit-order" type="submit" form="member-search">▼</button>
                     </th>
                     <th>編集</th>
+                    <th>詳細</th>
                 </tr>
                 <?php if(!empty($results)): ?>
                     <?php foreach ($results as $result): ?>
                         <tr class="member-showtable-body">
                             <td><?php echo $result['id'] ?></td>
-                            <td><?php echo $result['name_sei'] ?>　<?php echo $result['name_mei'] ?></td>
+                            <td>
+                                <a href="member_detail.php?id=<?php echo $result['id'] ?>"><?php echo $result['name_sei'] ?>　<?php echo $result['name_mei'] ?></a>
+                            </td>
                             <td><?php echo showGender($result['gender']) ?></td>
                             <td><?php echo $result['pref_name'].$result['address'] ?></td>
                             <td><?php echo date('Y/m/d', strtotime($result['created_at'])) ?></td>
                             <td style="width: 45px"><a href="member_regist.php?id=<?php echo $result['id'] ?>">編集</a></td>
+                            <td style="width: 45px"><a href="member_detail.php?id=<?php echo $result['id'] ?>">詳細</a></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>
@@ -375,6 +382,7 @@ function returnRequestUrlPage($url) {
                 </ul>
             <?php endif; ?>
         </div>
+
 
     </div>
 
