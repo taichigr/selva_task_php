@@ -178,6 +178,9 @@ if(!empty($_POST)) {
             <div class="form-group btn-wrapper">
                 <input class="btn btn-back" type="submit" value="<?php judgeEditOrRegist($session['editFlg'], '編集完了', '登録完了'); ?>">
             </div>
+            <div class="form-group btn-wrapper">
+                <button class="btn btn-back" type="button" onclick="history.back()">前に戻る</button>
+            </div>
         </form>
     </div>
 </main>
