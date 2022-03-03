@@ -15,9 +15,6 @@ if(!empty($_POST)) {
     unset($_SESSION['password']);
     unset($_SESSION['email']);
 
-
-    // 課題　なんかよくわからんけど、パスワードだけアップデートできない
-
     if($session['editFlg'] === 'true') {
         // 編集　編集の場合、パスワードありとなしで場合わけ
         if(empty($session['password'])) {
