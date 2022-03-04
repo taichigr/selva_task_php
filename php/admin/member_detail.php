@@ -73,6 +73,12 @@ if(!empty($_POST)) {
             <input type="hidden" name="id" value="<?php echo $id; ?>">
 
             <div class="form-group">
+                ID
+                <div class="confirm-area inline">
+                    <?php echo $id ?>
+                </div>
+            </div>
+            <div class="form-group">
                 氏名
                 <div class="confirm-area inline">
                     <?php echo $nameSei.'　'.$nameMei ?>
